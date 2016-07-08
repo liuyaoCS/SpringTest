@@ -5,6 +5,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 public class LifeBeanImpl implements LifeBean,BeanNameAware,ApplicationContextAware{
 	private String name;
