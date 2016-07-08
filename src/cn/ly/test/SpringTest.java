@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import cn.ly.bean.CustomerDao;
+import cn.ly.bean.CustomerDaoImpl;
 import cn.ly.bean.LifeBean;
 import cn.ly.bean.LifeBeanImpl;
 import cn.ly.bean.HelloService;
@@ -23,12 +25,36 @@ public class SpringTest {
 //		HelloService helloService=(HelloService) applicationContext.getBean("HelloService");
 //		helloService.sayHello();
 //	}
+//	@Test
+//	public void demo3(){
+//		ApplicationContext applicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
+//		LifeBean lifeBean=(LifeBean) applicationContext.getBean("LifeBean");
+//		lifeBean.add();
+//		lifeBean.find();
+//		((ClassPathXmlApplicationContext)applicationContext).close();
+//	}
+//	/**
+//	 * 不带切点的切面
+//	 */
+//	@Test
+//	public void demo4(){
+//		ApplicationContext applicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
+//		CustomerDao cd=(CustomerDao) applicationContext.getBean("customerDaoProxy");//需要用代理对象，才能增强
+//		cd.add();
+//		cd.update();
+//		cd.delete();
+//		
+//	}
+	/**
+	 * 带切点的切面
+	 */
 	@Test
-	public void demo3(){
+	public void demo5(){
 		ApplicationContext applicationContext=new ClassPathXmlApplicationContext("applicationContext.xml");
-		LifeBean lifeBean=(LifeBean) applicationContext.getBean("LifeBean");
-		lifeBean.add();
-		lifeBean.find();
-		((ClassPathXmlApplicationContext)applicationContext).close();
+		CustomerDaoImpl cd=(CustomerDaoImpl) applicationContext.getBean("customerDaoImplProxy");//需要用代理对象，才能增强
+		cd.add();
+		cd.update();
+		cd.delete();
+		
 	}
 }

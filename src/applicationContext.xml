@@ -4,7 +4,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="HelloService" class="cn.ly.bean.HelloServiceImpl">
+	<!--  <bean id="HelloService" class="cn.ly.bean.HelloServiceImpl">
 		<property name="info" value="liuyao"/>
 	</bean>
 	
@@ -15,4 +15,34 @@
 	
 	<bean class="cn.ly.bean.MyBeanPostProcessor"></bean>
 	
+	<bean id="customerDao" class="cn.ly.bean.CustomerDaoImpl"></bean>
+	<bean id="beforeAdvice" class="cn.ly.advice.MyBeforeAdvice"></bean>
+	<bean id="customerDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		
+		<property name="target" ref="customerDao"/>
+		
+		<property name="proxyInterfaces" value="cn.ly.bean.CustomerDao"/>
+	
+		<property name="interceptorNames" value="beforeAdvice"/>
+	
+		<property name="optimize" value="true"></property>
+	</bean>-->
+	
+	<bean id="customerDaoImpl" class="cn.ly.bean.CustomerDaoImpl"></bean>
+	<bean id="aroundAdvice" class="cn.ly.advice.MyAroundAdvice"></bean>
+	<bean id="mypointcutAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<!-- <property name="pattern" value="cn\.ly\.bean\.CustomerDaoImpl\.add.*"></property> -->
+		<property name="patterns" value=".*add.*,.*delete.*"></property>
+		<property name="advice" ref="aroundAdvice"></property>
+	</bean>
+	<bean id="customerDaoImplProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- 设置目标对象 -->
+		<property name="target" ref="customerDaoImpl"/>
+		<!-- 设置实现的接口 ,value中写接口的全路径 -->
+		<property name="proxyTargetClass" value="true"/>
+		<!-- 需要使用value:要的名称 -->
+		<property name="interceptorNames" value="mypointcutAdvisor"/>
+		<!-- 强制使用CGLIB代理 -->
+		<property name="optimize" value="true"></property>
+	</bean>
 </beans>
